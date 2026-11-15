@@ -1,0 +1,231 @@
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  margin-bottom: 8px;
+  color: #1e40af;
+}
+
+.page-header p {
+  color: #4b5563;
+}
+
+.card {
+  padding: 24px;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+}
+
+.card h2 {
+  margin-top: 0;
+}
+
+.card p {
+  line-height: 1.6;
+}
+
+.navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+button {
+  padding: 10px 16px;
+  border: 1px solid #1e40af;
+  border-radius: 6px;
+  background-color: #1e40af;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1e3a8a;
+}
+
+.navigation button[aria-pressed="true"] {
+  background-color: #172554;
+}
+
+:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
+}
+
+.form {
+  display: grid;
+  gap: 12px;
+  max-width: 400px;
+}
+
+.form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #6b7280;
+  border-radius: 6px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+caption {
+  padding: 10px 0;
+  text-align: left;
+  font-weight: bold;
+}
+
+th,
+td {
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  text-align: left;
+}
+
+th {
+  background-color: #eff6ff;
+}
+
+.navigation a {
+  display: inline-block;
+  padding: 10px 16px;
+  border: 1px solid #1e40af;
+  border-radius: 6px;
+  background-color: white;
+  color: #1e40af;
+  text-decoration: none;
+}
+
+.navigation a:hover {
+  background-color: #eff6ff;
+}
+
+.navigation a.active {
+  background-color: #1e40af;
+  color: white;
+}
+
+.error-message {
+  color: #b91c1c;
+  padding: 12px;
+  background-color: #fef2f2;
+  border: 1px solid #b91c1c;
+  border-radius: 6px;
+}
+
+button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.form select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #6b7280;
+  border-radius: 6px;
+  background-color: white;
+}
+
+.success-message {
+  color: #166534;
+  padding: 12px;
+  background-color: #f0fdf4;
+  border: 1px solid #166534;
+  border-radius: 6px;
+}
+
+.stock-section {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #d1d5db;
+}
+
+/* Keep long messages inside their containers. */
+.error-message,
+.success-message {
+  overflow-wrap: anywhere;
+}
+
+.table-wrapper:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
+}
+
+/* Make keyboard focus clearly visible. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
+}
+
+/* Tablet and smaller screens. */
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .navigation {
+    gap: 8px;
+  }
+}
+
+/* Mobile screens. */
+@media (max-width: 480px) {
+  .container {
+    padding: 12px;
+  }
+
+  .page-header h1 {
+    font-size: 26px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .navigation {
+    flex-direction: column;
+  }
+
+  .navigation a,
+  .navigation button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .form {
+    max-width: 100%;
+  }
+
+  .form input,
+  .form select,
+  .form button {
+    min-height: 44px;
+  }
+
+  th,
+  td {
+    padding: 10px;
+  }
+}
