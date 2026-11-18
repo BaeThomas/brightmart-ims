@@ -5,10 +5,13 @@ from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularSwaggerView,
 )
+from .views import health_check
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("suppliers.urls")),
+    path("api/health/", health_check, name="health-check"),
 
     path("api/token/", obtain_auth_token, name="api-token"),
     path("api/", include("inventory.urls")),
