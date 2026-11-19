@@ -1,0 +1,66 @@
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: ${DB_NAME:?Set DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Set MYSQL_ROOT_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - brightmart
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'MYSQL_PWD="$${MYSQL_PASSWORD}" mysql -h 127.0.0.1 -u "$${MYSQL_USER}" "$${MYSQL_DATABASE}" -e "SELECT 1"'
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 30s
+
+  backend:
+    build: .
+    image: brightmart-backend:iu05
+    environment:
+      DB_HOST: mysql
+      DB_PORT: "3306"
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      SECRET_KEY: ${DJANGO_SECRET_KEY:?Set DJANGO_SECRET_KEY}
+    command: >
+      sh -c "python manage.py migrate --noinput &&
+             exec gunicorn --bind 0.0.0.0:8000 brightmart_system.wsgi:application"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - brightmart
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health/', timeout=3)"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  web:
+    build: ./frontend
+    image: brightmart-frontend:iu05
+    ports:
+      - "127.0.0.1:8082:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - brightmart
+
+networks:
+  brightmart:
+
+volumes:
+  mysql_data:
