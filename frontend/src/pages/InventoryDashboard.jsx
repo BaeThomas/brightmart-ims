@@ -46,6 +46,17 @@ function InventoryDashboard() {
     };
   }, [reloadCount]);
 
+  const totalProducts = products.length;
+
+  const totalAvailableStock = products.reduce(
+    (total, product) => total + Number(product.stock_quantity),
+    0
+  );
+
+  const lowStockCount = products.filter(
+    (product) => Number(product.stock_quantity) <= Number(product.reorder_level)
+  ).length;
+
   const categoryNames = [
     ...new Set(products.map((product) => product.category_name).filter(Boolean)),
   ].sort();
@@ -86,6 +97,27 @@ function InventoryDashboard() {
 
       {!loading && !error && (
         <>
+          <section aria-labelledby="inventory-summary-heading">
+            <h3 id="inventory-summary-heading">Inventory Summary</h3>
+
+            <dl className="inventory-summary">
+              <div>
+                <dt>Total products</dt>
+                <dd>{totalProducts}</dd>
+              </div>
+
+              <div>
+                <dt>Total available units</dt>
+                <dd>{totalAvailableStock}</dd>
+              </div>
+
+              <div>
+                <dt>Low-stock products</dt>
+                <dd>{lowStockCount}</dd>
+              </div>
+            </dl>
+          </section>
+
           <h3>Products</h3>
 
           <div className="inventory-filters">
